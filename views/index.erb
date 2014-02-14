@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Is it snowing in <%= CITY %>, <%= STATE %>?</title>
+    <title>Is it freezing in <%= @weather.city_state %></title>
+
     <style type="text/css">
     body{
       background-color: #fff;
@@ -10,12 +11,14 @@
     </style>
 </head>
 <body>
-  <h1>Is it snowing in <%= CITY %>, <%= STATE %>?</h1>
-  <h2><%= @weather.snowing? %></h2>
+  <h1>Is it freezing in <%= @weather.city_state %>?</h1>
+
+  <h2><%= @weather.freezing? %></h2>
+
   <img src="<%= @weather.icon_url %>"/>
   <p>Updated <%= @weather.last_updated %> ago</p>
-  <p>made by <a href="https://twitter.com/invisiblefunnel">danny</a></p>
-  <p><a href="https://github.com/invisiblefunnel/is-it-snowing"><img src="GitHub-Mark-32px.png"></a></p>
+  <p>made by <a href="https://twitter.com/amymok">amy</a></p>
+  <p><a href="https://github.com/amymok/is-it-freezing"><img src="GitHub-Mark-32px.png"></a></p>
   <pre style="display:none;"><%= JSON.pretty_generate @weather.response %></pre>
 
   <script type="text/javascript">

@@ -24,15 +24,38 @@ class CurrentWeather < Struct.new(:response)
   include ActionView::Helpers::DateHelper
 
   SNOW_INDICATOR = "snow".freeze
+   FREEZE_TEMP = 32.0
+   WARM_TEMP = 60.0
+   HOT_TEMP = 80.0
+
+  # CITY_STATE = response['current_observation']['display_location']['full']
 
   def self.update(conn)
     new(conn.get.body)
+  end
+
+  def city_state
+    response['current_observation']['display_location']['full']
   end
 
   def snowing?
     weather = response['current_observation']['weather'].downcase
     weather.include?(SNOW_INDICATOR) ? "Yep" : "Nope"
   end
+
+   def freezing?
+    temp_f = response['current_observation']['temp_f']
+    case
+    when temp_f <= FREEZE_TEMP
+      "Yup!"
+    when temp_f > FREEZE_TEMP && temp_f <= WARM_TEMP
+      "Nope, but it is still a bit chilly"
+    when temp_f > WARM_TEMP && temp_f <= HOT_TEMP
+      "Nope, it is super nice and warm outside!"
+    else
+      "Nope, it is burning hot!!"
+    end
+   end
 
   def last_updated 
     time_ago_in_words Time.at(response['current_observation']['local_epoch'].to_i)
